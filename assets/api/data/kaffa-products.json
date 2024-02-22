@@ -1,0 +1,116 @@
+[
+    {
+        "id": 1,
+        "name": "Nicaragua 100% Arabica",
+        "price": "$17.99",
+        "img": "../assets/images/product-new-03.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Nicaragua Traditional",
+        "price": "$3.49",
+        "img": "../assets/images/product-new-07.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Ethiopia Arabica",
+        "price": "$16.99",
+        "img": "../assets/images/product-new-05.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Ethiopia Robusta",
+        "price": "$11.49",
+        "img": "../assets/images/product-new-01.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Columbia Organic",
+        "price": "$25.00",
+        "img": "../assets/images/product-new-02.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Ethiopia Organic Mix",
+        "price": "$13.49",
+        "img": "../assets/images/product-new-04.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Ethiopia Organic Mix",
+        "price": "$13.49",
+        "img": "../assets/images/product-new-06.jpg"
+    },
+    {
+        "id": 8,
+        "name": "Nicaragua Traditional",
+        "price": "$3.49",
+        "img": "../assets/images/product-black-02.jpg"
+    },
+    {
+        "id": 9,
+        "name": "Ethiopia Organic Mix",
+        "price": "$3.49",
+        "img": "../assets/images/product-black-07.jpg"
+    },
+    {
+        "id": 10,
+        "name": "Peru Whole Bean",
+        "price": "$42.49",
+        "img": "../assets/images/product-black-06.jpg"
+    },
+    {
+        "id": 11,
+        "name": "Ethiopia Arabica",
+        "price": "$16.99",
+        "img": "../assets/images/product-black-08.jpg"
+    },
+    {
+        "id": 12,
+        "name": "Columbia Organic",
+        "price": "$25.00",
+        "img": "../assets/images/product-black-03.jpg"
+    },
+    {
+        "id": 13,
+        "name": "Ethiopia Robusta",
+        "price": "$11.49",
+        "img": "../assets/images/product-black-05.jpg"
+    },
+    {
+        "id": 14,
+        "name": "Ethiopia Organic Mix",
+        "price": "$13.49",
+        "img": "../assets/images/product-black-04.jpg"
+    },
+    {
+        "id": 15,
+        "name": "Peru Whole Bean",
+        "price": "$42.49",
+        "img": "../assets/images/product-black-13.jpg"
+    },
+    {
+        "id": 16,
+        "name": "Ethiopia Robusta",
+        "price": "$11.49",
+        "img": "../assets/images/product-black-12.jpg"
+    },
+    {
+        "id": 17,
+        "name": "Ethiopia Arabica",
+        "price": "$16.99",
+        "img": "../assets/images/product-black-09.jpg"
+    },
+    {
+        "id": 18,
+        "name": "Ethiopia Organic Mix",
+        "price": "$13.49",
+        "img": "../assets/images/product-black-11.jpg"
+    },
+    {
+        "id": 19,
+        "name": "Columbia Organic",
+        "price": "$25.00",
+        "img": "../assets/images/product-black-10.jpg"
+    }
+]
