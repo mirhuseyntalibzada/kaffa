@@ -1,5 +1,6 @@
 const header = document.querySelector(".header-common"),
-    footer = document.querySelector("footer")
+    footer = document.querySelector("footer"),
+    mobileNav = document.querySelector(".mobile-nav")
 
 let title = "";
 switch (window.location.pathname) {
@@ -82,7 +83,7 @@ header.innerHTML = `
                             <div class="brands d-flex justify-content-center align-items-center">
                                 <a href="../pages/cart.html"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></a>
                                 <div class="shopping-amount d-flex justify-content-center align-items-center">
-                                    <p>0</p>
+                                    <p id="cart-amount">0</p>
                                 </div>
                             </div>
                             <div class="brands d-flex justify-content-center align-items-center">
@@ -173,3 +174,5 @@ footer.innerHTML = `
                 </div>
             </div>
         </div>`
+
+

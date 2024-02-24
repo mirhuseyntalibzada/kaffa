@@ -124,8 +124,9 @@ a {
     right: 50px;
 }
 
-.header-logo .shopping-amount p {
-    font-weight: 500;
+#cart-amount {
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .dark-mode-con {
@@ -916,6 +917,26 @@ li {
     color: #4E8B55;
 }
 
+.products-btn button {
+    background-color: #EFECE5;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.products-btn button:hover {
+    background-color: #151515;
+    color: white;
+}
+
+.dark-con.dark-mode .products-btn button:hover {
+    background-color: #4E8B55;
+    color: white;
+}
+
 /* ---------------------------- footer ---------------------------- */
 
 footer {
@@ -1086,10 +1107,6 @@ footer form label {
     right: 50px;
 }
 
-.header-common .shopping-amount p {
-    font-weight: 500;
-}
-
 .header-common i {
     color: #4E8B55;
     transition: .3s ease;
@@ -1243,6 +1260,10 @@ footer form label {
     background: none;
 }
 
+.dark-con.dark-mode .shop-sidebar .icon-x-shop {
+    color: white;
+}
+
 .shop-section .search-container-green {
     padding: 40px 30px;
     background-color: #4E8B55;
@@ -1381,7 +1402,7 @@ footer form label {
     transition: .3s;
 }
 
-#all-products-row .img-container:hover a {
+#all-products-row .img-container:hover div:nth-child(3) {
     opacity: 1;
     bottom: 50%;
 }
@@ -1394,20 +1415,29 @@ footer form label {
     opacity: .7;
 }
 
-#all-products-row a {
+#all-products-row .img-container div:nth-child(3){
     z-index: 2;
     position: absolute;
     left: 50%;
     bottom: 45%;
     transform: translate(-50%, 50%);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 50px;
-    background-color: #4E8B55;
-    color: white;
-    font-weight: 600;
     opacity: 0;
     transition: .3s ease;
+}
+
+#all-products-row .img-container div:nth-child(3) a {
+    cursor: pointer;
+    background-color: #4E8B55;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 30px;
+    transition: .3s;
+}
+
+#all-products-row .img-container div:nth-child(3) a:hover {
+    background-color: #151515;
 }
 
 /* ---------------------------- blog ---------------------------- */

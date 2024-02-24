@@ -35,7 +35,7 @@ if (closeBtn[1] && play) {
 const itemContainer = document.querySelector("#products-row");
 
 if (itemContainer) {
-    fetch("http://127.0.0.1:5500/assets/api/data/kaffa.json")
+    fetch("../assets/api/data/kaffa.json")
         .then(res => res.json())
         .then(data => {
             let card = ''
@@ -105,18 +105,24 @@ if (shopSidebar && btnOpen && btnClose) {
 const productContainer = document.querySelector("#all-products-row");
 
 if (productContainer) {
-    fetch("http://127.0.0.1:5500/assets/api/data/kaffa-products.json")
+    fetch('../assets/api/data/kaffa-products.json')
         .then(res => res.json())
         .then(data => {
 
-            let card = ''
-            data.slice(0,6).map(item => {
-                card += `
+            const pagiBtns = document.querySelectorAll("#pagi-btn")
+
+            function displayItems(start, end) {
+                let card = ''
+                data.slice(start, end).map(item => {
+                    card += `
             <div class="col-12 col-sm-6 col-lg-4">
                 <div class="img-container position-relative">
                     <div class="background"></div>
                     <img src="${item.img}" alt="">
-                    <a href="details.html?id=${item.id}" target="_blank">Read More</a>
+                    <div class="d-flex flex-column row-gap-2">
+                        <a href="details.html?id=${item.id}" target="_blank">Read More</a>
+                        <a id="cart-add-btn" >Add to Cart</a>
+                    </div>
                 </div>
                 <div class="icons d-flex justify-content-center gap-1">
                     <i class="fa-solid fa-star"></i>
@@ -131,23 +137,48 @@ if (productContainer) {
                 </div>
             </div>
             `
+                })
+                productContainer.innerHTML = card
+            }
+
+            displayItems(0, 6);
+
+            pagiBtns.forEach((btn, index) => {
+                btn.addEventListener("click", () => {
+                    const start = index * 6;
+                    const end = start + 6;
+                    displayItems(start, end);
+                });
+            });
+
+
+            // ----------- cart -------------\
+            const cartaddBtn = document.querySelectorAll("#cart-add-btn")
+            let amount = 0
+            cartaddBtn.forEach(btn=>{
+                btn.addEventListener("click", ()=>{
+                    amount = JSON.parse(localStorage.getItem("amount")) + 1
+                    localStorage.setItem("amount", amount)
+                    cartAmount.innerHTML = localStorage.getItem("amount")
+                })
             })
-            productContainer.innerHTML = card
         })
+
+
 
         .catch(err => {
             console.log('Error', err)
         })
 }
-
 // ------------ search ------------ 
 
 if (productContainer) {
-    fetch("http://127.0.0.1:5500/assets/api/data/kaffa-products.json")
+    fetch("../assets/api/data/kaffa-products.json")
         .then(res => res.json())
         .then(data => {
 
             const searchInput = document.querySelector("#search-product")
+            const pagiBtns = document.querySelectorAll("#pagi-btn")
 
             searchInput.addEventListener("input", (e) => {
                 const value = e.target.value.toLowerCase()
@@ -158,15 +189,19 @@ if (productContainer) {
                 displayFilteredData(filteredProducts, value);
             })
 
-            function displayFilteredData(filteredProducts, value) {
-                let card = ''
-                filteredProducts.map(item => {
-                    card += `
+            function displayFilteredData(filteredProducts) {
+                function displayItems(start, end) {
+                    let card = ''
+                    filteredProducts.slice(start, end).map(item => {
+                        card += `
                     <div class="col-12 col-sm-6 col-lg-4">
                         <div class="img-container position-relative">
                         <div class="background"></div>
                         <img src="${item.img}" alt="">
+                        <div class="d-flex flex-column row-gap-2">
                         <a href="details.html?id=${item.id}" target="_blank">Read More</a>
+                        <a id="cart-add-btn" >Add to Cart</a>
+                    </div>
                     </div>
                     <div class="icons d-flex justify-content-center gap-1">
                         <i class="fa-solid fa-star"></i>
@@ -181,9 +216,21 @@ if (productContainer) {
                     </div>
                 </div>
                 `
-                })
-                productContainer.innerHTML = card
+                    })
+                    productContainer.innerHTML = card
+                }
+                displayItems(0, 6);
+
+                pagiBtns.forEach((btn, index) => {
+                    btn.addEventListener("click", () => {
+                        const start = index * 6;
+                        const end = start + 6;
+                        displayItems(start, end);
+                    });
+                });
             }
+
+
         })
 
         .catch(err => {
@@ -313,7 +360,7 @@ if (localStorage.getItem("mode") === "dark") {
 const details = document.querySelector("#details")
 
 if (details) {
-    fetch("http://127.0.0.1:5500/assets/api/data/kaffa-products.json")
+    fetch("../assets/api/data/kaffa-products.json")
         .then(res => res.json())
         .then(data => {
             const urlid = location.href.slice(44, 99);
@@ -348,7 +395,16 @@ if (details) {
 
 // ------------ loading ------------
 
-setTimeout(()=>{
-    document.querySelector('.loading').style.display = "none";
-    document.querySelectorAll('#loading-pages').forEach(page => page.style.display = "block" )
-},1000);
+if (document.querySelector('.loading')) {
+    setTimeout(() => {
+        document.querySelector('.loading').style.display = "none";
+        document.querySelectorAll('#loading-pages').forEach(page => page.style.display = "block")
+    }, 1000);
+}
+
+// ------------ cart ------------
+
+const cartAmount = document.querySelectorAll("#cart-amount")
+cartAmount.forEach(cart => {
+    cart.innerHTML = localStorage.getItem("amount")
+})
