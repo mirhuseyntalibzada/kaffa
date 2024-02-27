@@ -83,6 +83,17 @@ a {
     color: black;
 }
 
+.brands button {
+    border: none;
+    background-color: transparent;
+    color: #4E8B55;
+    transition: .3s;
+}
+
+.brands:hover button {
+    color: white;
+}
+
 .header-logo .follow-us {
     color: white;
 }

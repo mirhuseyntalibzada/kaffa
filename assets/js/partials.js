@@ -12,12 +12,15 @@ switch (window.location.pathname) {
         break;
     case "/pages/contacts.html":
         title = "Contacts";
+
         break;
     case "/pages/details.html":
         title = "Details";
+
         break;
     case "/pages/faq.html":
         title = "FAQ";
+
         break;
     case "/pages/log-in.html":
         title = "Log In";
@@ -56,17 +59,17 @@ header.innerHTML = `
                             <span class="lines"></span>
                         </button>
                     </div>
-                    <div style="gap: 80px;" class="d-none d-xl-flex align-items-center">
+                    <div style="gap: 40px;" class="d-none d-xl-flex align-items-center">
                         <ul class="d-flex gap-5 m-0">
-                            <li><a class="active" href="../index.html">Home <i class="fa-solid fa-chevron-left"
+                            <li><a class="active langdata" href="../index.html">Home <i class="fa-solid fa-chevron-left"
                                         aria-hidden="true"></i></a></li>
-                            <li><a href="faq.html">FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
+                            <li><a href="faq.html" class="langdata">FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
                             </li>
-                            <li><a href="products.html">Products <i class="fa-solid fa-chevron-left"
+                            <li><a href="products.html" class="langdata">Products <i class="fa-solid fa-chevron-left"
                                         aria-hidden="true"></i></a></li>
-                            <li><a href="blog.html">Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
+                            <li><a href="blog.html" class="langdata">Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
                             </li>
-                            <li><a href="contacts.html">Contacts <i class="fa-solid fa-chevron-left"
+                            <li><a href="contacts.html" class="langdata">Contacts <i class="fa-solid fa-chevron-left"
                                         aria-hidden="true"></i></a></li>
                         </ul>
                         <div>
@@ -87,7 +90,7 @@ header.innerHTML = `
                                 </div>
                             </div>
                             <div class="brands d-flex justify-content-center align-items-center">
-                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                <button class="lang-btn"><p>AZ</p></button>
                             </div>
                         </div>
                     </div>
@@ -100,23 +103,22 @@ header.innerHTML = `
                     <p>Premium Coffee Market</p>
                 </div>
                 <div class="d-flex justify-content-center align-items-center flex-column hero-container gap-2">
-                    <h1>
+                    <h1 class="langdata">
                     ${title}
-                    </h1>
-                    <p><span><a href="../index.html">Home</a></span> // ${title}</p>
-                </div>
+                    </h1 ><p><span><a href="../index.html" class="langdata">Home</a></span> // ${title}</p>
+                </div >
                 <div class="icons d-none d-xl-flex flex-column gap-4">
                     <a href="#"><i class="fa-brands fa-twitter"></i></a>
                     <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="#"><i class="fa-brands fa-instagram"></i></a>
                     <a href="#"><i class="fa-brands fa-youtube"></i></a>
                 </div>
-            </div>
-        </section>
-`
+            </div >
+        </section >
+    `
 
 footer.innerHTML = `
-<div class="background"></div>
+    <div class="background"></div>
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl-4">
@@ -134,18 +136,18 @@ footer.innerHTML = `
                     </div>
                 </div>
                 <div class="col-12 col-lg-6 col-xl-4 mt-5 mt-lg-0   ">
-                    <h2>Contact Info</h2>
+                    <h2 class="langdata">Contact Info</h2>
                     <div class="d-flex my-4 gap-3">
                         <div><i class="fa-solid fa-location-dot"></i></div>
                         <div>
-                            <h6>Our location</h6>
+                            <h6 class="langdata">Our location</h6>
                             <p>Rio de Janeiro, RJ Brazil, 04103 Route</p>
                         </div>
                     </div>
                     <div class="d-flex gap-3">
                         <div><i class="fa-solid fa-phone"></i></div>
                         <div>
-                            <h6>Phones:</h6>
+                            <h6 class="langdata">Phones:</h6>
                             <div>
                                 <a href="tel:+49078-039-23-11">
                                     +49078-039-23-11
@@ -160,15 +162,15 @@ footer.innerHTML = `
                     </div>
                 </div>
                 <div class="col-12 d-none d-xl-block col-xl-4">
-                    <h2>Subscribe</h2>
+                    <h2 class="langdata">Subscribe</h2>
                     <form class="mt-4" action="">
                         <div>
                             <input placeholder="Your email ..." class="email" type="email">
-                            <button>Subscribe</button>
+                                <button class="langdata">Subscribe</button>
                         </div>
                         <div class="mt-4">
                             <input type="checkbox">
-                            <label for="">I have read and agree to the terms & conditions</label>
+                                <label for="" class="langdata">I have read and agree to the terms & conditions</label>
                         </div>
                     </form>
                 </div>

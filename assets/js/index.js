@@ -150,18 +150,6 @@ if (productContainer) {
                     displayItems(start, end);
                 });
             });
-
-
-            // ----------- cart -------------\
-            const cartaddBtn = document.querySelectorAll("#cart-add-btn")
-            let amount = 0
-            cartaddBtn.forEach(btn=>{
-                btn.addEventListener("click", ()=>{
-                    amount = JSON.parse(localStorage.getItem("amount")) + 1
-                    localStorage.setItem("amount", amount)
-                    cartAmount.innerHTML = localStorage.getItem("amount")
-                })
-            })
         })
 
 
@@ -321,31 +309,27 @@ if (contactForm) {
 const darkContainers = document.querySelectorAll(".dark-con")
 const darkModeButtons = document.querySelectorAll(".dark-mode-btn")
 
-var isLight = true
-
 if (localStorage.getItem("mode") === null) {
     localStorage.setItem("mode", "light")
 } else {
     darkModeButtons.forEach(darkModeBtn => {
         darkModeBtn.addEventListener("click", () => {
-            if (isLight) {
+            if (localStorage.getItem("mode") == "light") {
                 darkContainers.forEach(container => {
                     container.classList.add("dark-mode")
                 })
-                isLight = false
                 localStorage.setItem("mode", "dark")
             } else {
                 darkContainers.forEach(container => {
                     container.classList.remove("dark-mode")
                 })
-                isLight = true
                 localStorage.setItem("mode", "light")
             }
         })
     })
 }
 
-if (localStorage.getItem("mode") === "dark") {
+if (localStorage.getItem("mode") == "dark") {
     darkContainers.forEach(container => {
         container.classList.add("dark-mode")
     })
@@ -365,7 +349,6 @@ if (details) {
         .then(data => {
             const urlid = location.href.slice(44, 99);
             const filterData = data.filter(p => p.id == urlid);
-            console.log(filterData);
             let card = `
             <div class="col-12 col-md-8 align-self-center">
                 <h1 class="text-center text-md-start">${filterData[0].name}</h1>
@@ -402,9 +385,221 @@ if (document.querySelector('.loading')) {
     }, 1000);
 }
 
-// ------------ cart ------------
+// ---------- language -------------
 
-const cartAmount = document.querySelectorAll("#cart-amount")
-cartAmount.forEach(cart => {
-    cart.innerHTML = localStorage.getItem("amount")
-})
+const langData = document.querySelectorAll(".langdata"),
+    langBtn = document.querySelector(".lang-btn")
+
+function language(dataArray) {
+    if (localStorage.getItem("lang") === null) {
+        localStorage.setItem("lang", "eng")
+    } else {
+        langBtn.addEventListener("click", () => {
+            if (langBtn.innerHTML == "<p>AZ</p>") {
+                langBtn.innerHTML = `<p>EN</p>`
+                langData.forEach((data, index) => {
+                    data.innerHTML = dataArray.az[index]
+                })
+                localStorage.setItem("lang", "eng")
+            } else {
+                langBtn.innerHTML = `<p>AZ</p>`
+                langData.forEach((data, index) => {
+                    data.innerHTML = dataArray.eng[index]
+                })
+                localStorage.setItem("lang", "az")
+            }
+        })
+    }
+
+    if (localStorage.getItem("lang") === "eng") {
+        langBtn.innerHTML = `<p>EN</p>`
+        langData.forEach((data, index) => {
+            data.innerHTML = dataArray.az[index]
+        })
+    } else {
+        langBtn.innerHTML = `<p>AZ</p>`
+        langData.forEach((data, index) => {
+            data.innerHTML = dataArray.eng[index]
+        })
+    }
+}
+
+if (window.location.pathname === "/index.html") {
+    let dataLang = {
+        eng: ["Home", "FAQ", "Products", "Blog", "Contacts", "Follow us", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Products <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Contacts <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Natural", "Brazilian Coffee", "Arabica & Robusta",
+            "Exclusive Planted Coffee", "Download price", "Read more", "Shop now", "Arabica Green", "Arabica Roasted", "Robusta Roasted", "Mixed Sorts",
+            "Divine", "Aroma <br> in Every Cup", "Read More", "Pure Grades", "Wide Assortment", "Proper Roasting", "High Quality", "Excellent Grinding",
+            "Awesome Aroma", "How we Prepare our Beans", "Watch Video", "Read more", "Selected Varieties", "Hectares of Plantations", "Coffee Pickers",
+            "Consumer Countries", "Online Store", "Popular Products", "Ethiopia Arabica", "Pure Grade", "Amazing Vanilla Aroma", "Strong Roasting",
+            "Ultra Grinding", "Add to cart", "More info", "Online Store", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
+            "I have read and agree to the terms & conditions"],
+        az: ["Ana Səhifə", "FAQ", "Məhsullar", "Məqalə", "Kontanklar", "Bizi İzləyin", `Ana Səhifə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Təbii", "Braziliya Kofesi", "Arabika və Robusta",
+            "Ekskluziv Yetişmiş Kofe", "Qiyməti Yükləyin", "Daha çox", "İndi alın", "Yaşıl Arabika", "Qızardılmış Arabika", "Qızardılmış Robusta", "Qarışıq Növlər",
+            "Hər fincanda", "Mükəmməl <br> Dad", "Daha çox", "Əla Növ", "Geniş çeşidlənmə", "Düzgün Qızarma", "Yüksək Keyfiyyət", "Mükəmməl Üyüdülmə",
+            "Mükəmməl Aroma", "Kofelərimiz Necə Hazırlanır", "Videoyu İzləyin", "Daha çox", "Seçilmiş Növ", "Hektar Plantasiya", "Kofe Mütəxəssisləri",
+            "İstehlakçı Ölkə", "Onlayn Mağaza", "Populyar Məhsullar", "Efiopiya Arabika", '<i class="fa-solid fa-check"></i> Əla növ', '<i class="fa-solid fa-check"></i>Mükəmməl Vanil Aroması', '<i class="fa-solid fa-check"></i> Düzgün Qızardılma',
+            '<i class="fa-solid fa-check"></i> Ultra Üyüdülmə', "Səbətə Əlavə Edin", "Daha çox info", "Onlayn Mağaza", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Şərtləri və qaydaları oxudum və qəbul edirəm"]
+    }
+    language(dataLang)
+} else if (window.location.pathname === "/pages/faq.html") {
+    let dataLang = {
+        eng: ["Home", "FAQ", "Products", "Blog", "Contacts", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Products <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Contacts <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "FAQ", "Home", "Every day we help for our customers", "Managment", "Analytics", "Consultation", "Engineering", "If you need more help", "Read More",
+            "Is it possible to pay for an order with Visa and MasterCard payment cards?", "Is it possible to pay by credit card?",
+            "What payment methods exist in your company?", "Can I return the product after purchase?", "How do I use a promotional code?",
+            "What is the validity period of the gift certificate?", "What if the prepaid goods are not delivered?", "Where and how can I exchange or refund?",
+            "Is it possible to pay for an order with Visa and MasterCard payment cards?", "Is it possible to pay by credit card?", "What payment methods exist in your company?",
+            "Can I return the product after purchase?", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
+            "I have read and agree to the terms & conditions"],
+        az: ["Ana Səhifə", "FAQ", "Məhsullar", "Məqalə", "Əlaqə", `Ana Səhifə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Tez-Tez Verilən Suallar", "Ana Səhifə", "Hər gün müştərilərimizə yardım edirik", "İdarəetmə", "Analitika", "Konsultasiya", "Mühəndislik", "Yardıma ehtiyacınız olarsa", "Daha Ətraflı",
+            "Visa və Mastercard ödəniş kartları ilə sifarişi ödəmək mümkündür?", "Kredit kartı ilə ödəniş mümkündürmü?",
+            "Şirkətinizdə hansı ödəniş üsulları mövcuddur?", "Məhsulu satın aldıqdan sonra geri qaytarmaq mümkündürmü?", "Promo kodu necə istifadə edə bilərəm?",
+            "Hədiyyə sertifikatının etibarlılıq müddəti nə qədərdir?", "Əvvəlcədən ödənişi edilmiş məhsullar çatdırılmazsa nə etməli?", "Harada və necə məhsulu dəyişdirə və ya geri qaytara bilərəm?",
+            "Visa və Mastercard ödəniş kartları ilə sifarişi ödəmək mümkündürmü?", "Kredit kartı ilə ödəniş mümkündürmü?", "Şirkətinizdə hansı ödəniş üsulları mövcuddur?",
+            "Məhsulu satın aldıqdan sonra geri qaytarmaq mümkündürmü?", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Şərtləri və qaydaları oxudum və qəbul edirəm"]
+    }
+    language(dataLang)
+} else if (window.location.pathname === "/pages/products.html") {
+    let dataLang = {
+        eng: ["Home", "FAQ", "Products", "Blog", "Contacts", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Products <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Contacts <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Products", "Home", "PRODUCT CATEGORIES", "Arabica Green", "Arabica Roasted", "Black Coffee", "Mixed Sorts", "Products", "Bakery & Sweets",
+            "Black & Green Tea", "Cakes", "Chocolate", "Coffee Drinks", "Fresh Croissants", "Sandwiches", "Sweet Cookies",
+            "Robusta Roasted", "PRODUCT TAGS", "arabica", "chocolate", "coffee", "delivery", "espresso", "Showing 1-6 of 19 results",
+            "Default sorting", "Sort by popularity", "Sort by average rating", "Sort by latest", "Sort by price: low to high", "Sort by price: high to low",
+            "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
+            "I have read and agree to the terms & conditions"],
+        az: ["Ana Səhifə", "FAQ", "Məhsullar", "Məqalə", "Əlaqə", `Ana Səhifə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Məhsullar", "Ana Səhifə", "MƏHSUL KATEQORİYASI", "Yaşıl Arabika", "Qızarmış Arabika", "Qara Kofe", "Qarışıq Növlər", "Məhsullar", "Şirniyyatlar",
+            "Qara & Yaşıl Çay", "Tortlar", "Şokolad", "Kofe İçkiləri", "Təzə Kruvasanlar", "Sendviçlər", "Şirin Peçenyelər",
+            "Qızarmış Robusta", "MƏHSUL TEQLƏRİ", "arabika", "şokolad", "kofe", "çatdırılma", "espresso", "19 nəticədən 1-6 arası göstərilir",
+            "Varsayılan çeşidləmə", "Populyarlığa görə çeşidləmə", "Ortalama reytinqə görə çeşidləmə", "Sonuncuya görə çeşidləmə", "Qiymətə görə çeşidləmə: azdan çoxa",
+            "Qiymətə görə çeşidləmə: çoxdan aza", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Şərtləri və qaydaları oxudum və qəbul edirəm"]
+    }
+    language(dataLang)
+} else if (window.location.pathname === "/pages/blog.html") {
+    let dataLang = {
+        eng: ["Home", "FAQ", "Products", "Blog", "Contacts", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Products <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Contacts <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Blog", "Home", "<span>Roasted coffee</span>", "Coffee Machine Rental and Delivery Business", "February 12, 2024", "<span>Roasted coffee</span>", "The Most Expensive Cup of Coffee in the USA", "February 12, 2024", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
+            "I have read and agree to the terms & conditions"],
+        az: ["Ana Səhifə", "FAQ", "Məhsullar", "Məqalə", "Əlaqə", `Ana Səhifə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Məqalə", "Ana Səhifə", "<span>Qızadılmış kofe</span>", "Qəhvə Maşınlarının İcarəsi və Çatdırılması Biznesi", "12 Fevral, 2024", "<span>Qızadılmış kofe</span>", "ABŞ-ın ən bahalı qəhvəsi", "12 Fevral, 2024", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Şərtləri və qaydaları oxudum və qəbul edirəm"]
+    }
+    language(dataLang)
+} else if (window.location.pathname === "/pages/contacts.html") {
+    let dataLang = {
+        eng: ["Home", "FAQ", "Products", "Blog", "Contacts", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Products <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Contacts <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Contacts", "Home", "Location", "29 Nicolas str, New York, 987597-50", "Phones", "Email", "Working Hours", "Wednesday - Sunday", "7:00 AM - 5:00 PM",
+            "Send Message", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
+            "I have read and agree to the terms & conditions"],
+        az: ["Ana Səhifə", "FAQ", "Məhsullar", "Məqalə", "Əlaqə", `Ana Səhifə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Əlaqə", "Ana Səhifə", "Ünvan", "29 Nikolas küç, Nyu York, 987597-50", "Telefon", "Elektron Poçt", "İşləmə Saatları", "Çərşənbə - Bazar", "07:00 - 17:00",
+            "Mesaj Göndərin", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Şərtləri və qaydaları oxudum və qəbul edirəm"]
+    }
+    language(dataLang)
+} else if (window.location.pathname === "/pages/details.html") {
+    let dataLang = {
+        eng: ["Home", "FAQ", "Products", "Blog", "Contacts", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Products <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Contacts <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Details", "Home", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
+            "I have read and agree to the terms & conditions"],
+        az: ["Ana Səhifə", "FAQ", "Məhsullar", "Məqalə", "Əlaqə", `Ana Səhifə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Təfərrüatlar", "Ana Səhifə", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Şərtləri və qaydaları oxudum və qəbul edirəm"]
+    }
+    language(dataLang)
+} else if (window.location.pathname === "/pages/cart.html") {
+    let dataLang = {
+        eng: ["Home", "FAQ", "Products", "Blog", "Contacts", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Products <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Contacts <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Cart", "Home", "Your cart is currently empty.", "Return to shop", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
+            "I have read and agree to the terms & conditions"],
+        az: ["Ana Səhifə", "FAQ", "Məhsullar", "Məqalə", "Əlaqə", `Ana Səhifə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Səbət", "Ana Səhifə", "Səbətiniz hal-hazırda boşdur", "Mağazaya geri qayıdın", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Şərtləri və qaydaları oxudum və qəbul edirəm"]
+    }
+    language(dataLang)
+} else if (window.location.pathname === "/pages/log-in.html") {
+    let dataLang = {
+        eng: ["Home", "FAQ", "Products", "Blog", "Contacts", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Products <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Contacts <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Log In", "Home", "Login", "Username or email address <span>*</span>", "Password <span>*</span>", "Log in", "Sign up", "Remember me",
+            "Lost your password?", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
+            "I have read and agree to the terms & conditions"],
+        az: ["Ana Səhifə", "FAQ", "Məhsullar", "Məqalə", "Əlaqə", `Ana Səhifə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Daxil olun", "Ana Səhifə", "Daxil olun", "İstifadəçi adı və ya e-mail <span>*</span>", "Şifrə <span>*</span>", "Daxil olun", "Qeydiyyatdan keçin",
+            "Yadda saxla", "Şifrənizi unutdunuz? Cəhənnəməki", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Şərtləri və qaydaları oxudum və qəbul edirəm"]
+    }
+    language(dataLang)
+} else if (window.location.pathname === "/pages/sign-up.html") {
+    let dataLang = {
+        eng: ["Home", "FAQ", "Products", "Blog", "Contacts", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Products <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Contacts <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Sign Up", "Home", "Sign up", "Username <span>*</span>", "Email <span>*</span>", "Password <span>*</span>", "Sign up", "Remember me", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
+            "I have read and agree to the terms & conditions"],
+        az: ["Ana Səhifə", "FAQ", "Məhsullar", "Məqalə", "Əlaqə", `Ana Səhifə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Qeydiyyat", "Ana Səhifə", "Qeydiyyat", "İstifadəçi adı <span>*</span>", "E-mail <span>*</span>", "Şifrə <span>*</span>", "Qeydiyyatdan keç", "Yadda saxla", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Şərtləri və qaydaları oxudum və qəbul edirəm"]
+    }
+    language(dataLang)
+} else if (window.location.pathname === "/pages/my-account.html") {
+    let dataLang = {
+        eng: ["Home", "FAQ", "Products", "Blog", "Contacts", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Products <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Contacts <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "My Account", "Home", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
+            "I have read and agree to the terms & conditions"],
+        az: ["Ana Səhifə", "FAQ", "Məhsullar", "Məqalə", "Əlaqə", `Ana Səhifə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
+            "Hesabım", "Ana Səhifə", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Şərtləri və qaydaları oxudum və qəbul edirəm"]
+    }
+    language(dataLang)
+}
+
+
+
+
+
+
