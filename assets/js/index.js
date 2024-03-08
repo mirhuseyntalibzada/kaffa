@@ -108,7 +108,6 @@ if (productContainer) {
     fetch('../assets/api/data/kaffa-products.json')
         .then(res => res.json())
         .then(data => {
-
             const pagiBtns = document.querySelectorAll("#pagi-btn")
 
             function displayItems(start, end) {
@@ -121,7 +120,7 @@ if (productContainer) {
                     <img src="${item.img}" alt="">
                     <div class="d-flex flex-column row-gap-2">
                         <a href="details.html?id=${item.id}" target="_blank">Read More</a>
-                        <a id="cart-add-btn" >Add to Cart</a>
+                        <a id="cart-add-btn" data-id="${item.id}">Add to Cart</a>
                     </div>
                 </div>
                 <div class="icons d-flex justify-content-center gap-1">
@@ -133,12 +132,14 @@ if (productContainer) {
                 </div>
                 <div class="d-flex align-items-center flex-column">
                     <h5>${item.name}</h5>
-                    <h5>${item.price}</h5>
+                    <h5>$${item.price}</h5>
                 </div>
             </div>
             `
                 })
-                productContainer.innerHTML = card
+                productContainer.innerHTML = card;
+                const cartBtn = document.querySelectorAll("#cart-add-btn");
+                getItemID(cartBtn);
             }
 
             displayItems(0, 6);
@@ -151,8 +152,6 @@ if (productContainer) {
                 });
             });
         })
-
-
 
         .catch(err => {
             console.log('Error', err)
@@ -390,40 +389,6 @@ if (document.querySelector('.loading')) {
 const langData = document.querySelectorAll(".langdata"),
     langBtn = document.querySelector(".lang-btn")
 
-function language(dataArray) {
-    if (localStorage.getItem("lang") === null) {
-        localStorage.setItem("lang", "eng")
-    } else {
-        langBtn.addEventListener("click", () => {
-            if (langBtn.innerHTML == "<p>AZ</p>") {
-                langBtn.innerHTML = `<p>EN</p>`
-                langData.forEach((data, index) => {
-                    data.innerHTML = dataArray.az[index]
-                })
-                localStorage.setItem("lang", "eng")
-            } else {
-                langBtn.innerHTML = `<p>AZ</p>`
-                langData.forEach((data, index) => {
-                    data.innerHTML = dataArray.eng[index]
-                })
-                localStorage.setItem("lang", "az")
-            }
-        })
-    }
-
-    if (localStorage.getItem("lang") === "eng") {
-        langBtn.innerHTML = `<p>EN</p>`
-        langData.forEach((data, index) => {
-            data.innerHTML = dataArray.az[index]
-        })
-    } else {
-        langBtn.innerHTML = `<p>AZ</p>`
-        langData.forEach((data, index) => {
-            data.innerHTML = dataArray.eng[index]
-        })
-    }
-}
-
 if (window.location.pathname === "/index.html") {
     let dataLang = {
         eng: ["Home", "FAQ", "Products", "Blog", "Contacts", "Follow us", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
@@ -543,12 +508,12 @@ if (window.location.pathname === "/index.html") {
         eng: ["Home", "FAQ", "Products", "Blog", "Contacts", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
             `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Products <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
             `Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Contacts <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
-            "Cart", "Home", "Your cart is currently empty.", "Return to shop", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
+            "Cart", "Home", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
             "I have read and agree to the terms & conditions"],
         az: ["Ana Səhifə", "FAQ", "Məhsullar", "Məqalə", "Əlaqə", `Ana Səhifə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
             `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
             `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
-            "Səbət", "Ana Səhifə", "Səbətiniz hal-hazırda boşdur", "Mağazaya geri qayıdın", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Səbət", "Ana Səhifə", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
             "Şərtləri və qaydaları oxudum və qəbul edirəm"]
     }
     language(dataLang)
@@ -564,7 +529,7 @@ if (window.location.pathname === "/index.html") {
             `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
             `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
             "Daxil olun", "Ana Səhifə", "Daxil olun", "İstifadəçi adı və ya e-mail <span>*</span>", "Şifrə <span>*</span>", "Daxil olun", "Qeydiyyatdan keçin",
-            "Yadda saxla", "Şifrənizi unutdunuz? Cəhənnəməki", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Yadda saxla", "Şifrənizi unutmusunuz?", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
             "Şərtləri və qaydaları oxudum və qəbul edirəm"]
     }
     language(dataLang)
@@ -598,8 +563,140 @@ if (window.location.pathname === "/index.html") {
     language(dataLang)
 }
 
+function language(dataArray) {
+    if (localStorage.getItem("lang") === null) {
+        localStorage.setItem("lang", "eng")
+    } else {
+        langBtn.addEventListener("click", () => {
+            if (langBtn.innerHTML == "<p>AZ</p>") {
+                langBtn.innerHTML = `<p>EN</p>`
+                langData.forEach((data, index) => {
+                    data.innerHTML = dataArray.az[index]
+                })
+                localStorage.setItem("lang", "az")
+            } else {
+                langBtn.innerHTML = `<p>AZ</p>`
+                langData.forEach((data, index) => {
+                    data.innerHTML = dataArray.eng[index]
+                })
+                localStorage.setItem("lang", "eng")
+            }
+        })
+    }
+
+    if (localStorage.getItem("lang") === "az") {
+        langBtn.innerHTML = `<p>EN</p>`
+        langData.forEach((data, index) => {
+            data.innerHTML = dataArray.az[index]
+        })
+    } else {
+        langBtn.innerHTML = `<p>AZ</p>`
+        langData.forEach((data, index) => {
+            data.innerHTML = dataArray.eng[index]
+        })
+    }
+}
+
+// ---------- addToCart -------------
+let cart = []
+
+const getItemID = (cartBtn) => {
+    cartBtn.forEach(btn => (
+        btn.addEventListener("click", () => {
+            let product_id = btn.getAttribute("data-id")
+            addToCart(product_id)
+        })
+    ))
+}
+
+const addToCart = (product_id) => {
+    let positionOfItemCart = cart.findIndex((value) => value.product_id == product_id)
+    if (cart <= 0) {
+        cart = [{
+            product_id: product_id,
+            quantity: 1
+        }]
+    } else if (positionOfItemCart < 0) {
+        cart.push({
+            product_id: product_id,
+            quantity: 1
+        })
+    } else {
+        cart[positionOfItemCart].quantity += 1;
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart))
+}
 
 
+const alertCart = document.querySelector("#alert")
+const table = document.querySelector("#table-cont")
+const btnShop = document.querySelector("#button-shop")
+
+if (alertCart && table && btnShop) {
+    if (JSON.parse(localStorage.getItem("cart")) === null) {
+        alertCart.innerHTML = `<div>
+                                    <p class="dark-p langdata">Your cart is currently empty.</p>
+                                </div>`
+        table.innerHTML = ``
+        btnShop.innerHTML = `<button class="mt-4"><a href="../pages/products.html" class="langdata">Return to shop</a></button>`
+    } else {
+        alertCart.innerHTML = ``
+        table.innerHTML = `<thead>
+        <tr>
+            <td colspan="3">PRODUCTS</td>
+            <td>PRICE</td>
+            <td>QUANTITY</td>
+            <td>SUBTOTAL</td>
+        </tr>
+    </thead>
+    <tbody class="cart-item-container">
+    </tbody>`
+        btnShop.innerHTML = ``
+    }
+}
 
 
+const cartCon = document.querySelector(".cart-item-container")
+if (cartCon) {
+    fetch('../assets/api/data/kaffa-products.json')
+        .then(res => res.json())
+        .then(data => {
+            let newCart = ``
+            JSON.parse(localStorage.getItem("cart")).map(cart => {
+                data.forEach(item => {
+                    if (cart.product_id == item.id) {
+                        newCart += `
+                        <tr>
+                            <td style="width: 3em;">
+                                <a href="#" class="remove delete" data-id=${item.id} style="width: 3em;">x</a>
+                            </td>
+                            <td style="width: 4em;">
+                                <img style="width: 100%;" src="${item.img}" alt="">
+                            </td>
+                            <td>${item.name}</td>
+                            <td>$${item.price}</td>
+                            <td><input id="price" type="number" value="${cart.quantity}"></td>
+                            <td>$${Math.round((Number(item.price) * cart.quantity) * 100) / 100}</td>
+                        </tr>`
+                    }
+                })
+            })
+            cartCon.innerHTML = newCart
+        })
+
+        .catch(err => {
+            console.log('Error', err)
+        })
+}
+
+
+const cartAmount = document.querySelector("#cart-amount")
+const cartAmount2 = document.querySelector("#cart-amount2")
+let cartItemCount = 0
+JSON.parse(localStorage.getItem("cart")).map(cart => {
+    cartItemCount += cart.quantity
+})
+cartAmount.innerHTML = cartItemCount
+cartAmount2.innerHTML = cartItemCount
 

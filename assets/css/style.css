@@ -155,7 +155,7 @@ a {
     color: white !important;
 }
 
-.dark-con.dark-mode a,
+.dark-con.dark-mode a:not(.shop-section .tags .row .col-4 div a),
 .dark-con.dark-mode p,
 .dark-con.dark-mode li,
 .dark-con.dark-mode h1 {
@@ -1426,7 +1426,7 @@ footer form label {
     opacity: .7;
 }
 
-#all-products-row .img-container div:nth-child(3){
+#all-products-row .img-container div:nth-child(3) {
     z-index: 2;
     position: absolute;
     left: 50%;
@@ -1661,7 +1661,7 @@ footer form label {
     padding: 100px 0;
 }
 
-.cart-section .container>div {
+.cart-section .container>div>div {
     padding: 20px;
     background-color: #F8F6F7;
     border-top: 4px solid #4E8B55;
@@ -1677,6 +1677,54 @@ footer form label {
 .cart-section button a {
     color: white;
     font-weight: 700;
+}
+
+.cart-section a.remove {
+    color: red;
+    font-weight: 900;
+}
+
+.cart-section td {
+    text-align: center;
+    padding: 15px;
+    font-weight: 900;
+}
+
+.cart-section tbody td {
+    border: 1px solid lightgray;
+}
+
+.cart-section tbody td:nth-child(1) {
+    border-right: 0;
+}
+
+.cart-section tbody td:nth-child(2) {
+    border-left: 0;
+}
+
+.cart-section thead {
+    background-color: #151515;
+    color: white;
+    padding: 15px;
+    border: solid 1px #151515;
+}
+
+.dark-con.dark-mode thead {
+    background-color: #4E8B55;
+    border: 1px solid #4E8B55;
+}
+
+.dark-con.dark-mode tbody td {
+    background-color: white;
+    color: black;
+}
+
+.cart-section tbody input {
+    text-align: center;
+    width: 20%;
+    padding: 10px 5px;
+    border-radius: 15px;
+    border: 1px solid #151515;
 }
 
 /* ---------------------------- details - section ---------------------------- */
