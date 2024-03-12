@@ -10,6 +10,9 @@ switch (window.location.pathname) {
     case "/pages/cart.html":
         title = "Cart";
         break;
+    case "/pages/checkout.html":
+        title = "Checkout";
+        break;
     case "/pages/contacts.html":
         title = "Contacts";
 

@@ -626,12 +626,13 @@ const addToCart = (product_id) => {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart))
+    getCart(cart)
 }
-
 
 const alertCart = document.querySelector("#alert")
 const table = document.querySelector("#table-cont")
 const btnShop = document.querySelector("#button-shop")
+const checkout = document.querySelector("#checkout")
 
 if (alertCart && table && btnShop) {
     if (JSON.parse(localStorage.getItem("cart")) === null) {
@@ -649,10 +650,13 @@ if (alertCart && table && btnShop) {
             <td>QUANTITY</td>
             <td>SUBTOTAL</td>
         </tr>
-    </thead>
-    <tbody class="cart-item-container">
-    </tbody>`
+        </thead>
+            <tbody class="cart-item-container">
+        </tbody>`
         btnShop.innerHTML = ``
+        checkout.innerHTML = `
+        <a href="checkout.html">Proceed to checkout</a>
+        `
     }
 }
 
@@ -693,10 +697,81 @@ if (cartCon) {
 
 const cartAmount = document.querySelector("#cart-amount")
 const cartAmount2 = document.querySelector("#cart-amount2")
-let cartItemCount = 0
-JSON.parse(localStorage.getItem("cart")).map(cart => {
-    cartItemCount += cart.quantity
-})
-cartAmount.innerHTML = cartItemCount
-cartAmount2.innerHTML = cartItemCount
+const getCart = (cart) => {
+    let cartItemCount = 0
+    cart.map(cart => {
+        console.log(cart.quantity);
+        cartItemCount += cart.quantity
+    })
+    localStorage.setItem("amount", cartItemCount)
+    cartAmount.innerHTML = cartItemCount
+    cartAmount2.innerHTML = cartItemCount
+}
+cartAmount.innerHTML = localStorage.getItem("amount")
+cartAmount2.innerHTML = localStorage.getItem("amount")
 
+
+// ---------- checkout - accordion -------------
+
+const radioBtn = document.querySelectorAll(".payment-radio")
+const accordionCont = document.querySelectorAll(".accordion-content")
+
+if (radioBtn && accordionCont) {
+    for (let i = 0; i < radioBtn.length; i++) {
+        radioBtn[i].addEventListener("click", () => {
+            if (!accordionCont[i].classList.contains('active')) {
+                closeAllCont()
+                accordionCont[i].classList.add('active');
+            }
+        })
+    }
+
+    closeAllCont = () => {
+        accordionCont.forEach(cont => {
+            cont.classList.remove('active')
+        })
+    }
+}
+
+// ---------- checkout -------------
+
+const tbodyCont = document.querySelector(".checkout-tbody"),
+    tfootCont = document.querySelector(".checkout-tfoot")
+
+if (tbodyCont && tfootCont) {
+    fetch('../assets/api/data/kaffa-products.json')
+        .then(res => res.json())
+        .then(data => {
+            let newBodyCart = ``,
+                newFootCart = ``
+            let totalSum = 0;
+            JSON.parse(localStorage.getItem("cart")).map(cart => {
+                data.forEach(item => {
+                    if (cart.product_id == item.id) {
+                        totalSum += Number(item.price) * cart.quantity
+                        newBodyCart += `
+                        <tr>
+                            <td>${item.name} × ${cart.quantity}</td>
+                            <td>$${Math.round((Number(item.price) * cart.quantity) * 100) / 100}</td>
+                        </tr>`
+                        newFootCart = `
+                        <tr>
+                            <th style="text-align: right;">Subtotal</th>
+                            <td>$${Math.round((totalSum) * 100) / 100}</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: right;">Total</th>
+                            <td>$${Math.round((totalSum) * 100) / 100}</td>
+                        </tr>
+                        `
+                    }
+                })
+            })
+            tbodyCont.innerHTML = newBodyCart
+            tfootCont.innerHTML = newFootCart
+        })
+
+        .catch(err => {
+            console.log('Error', err)
+        })
+}

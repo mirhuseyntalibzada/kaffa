@@ -155,7 +155,7 @@ a {
     color: white !important;
 }
 
-.dark-con.dark-mode a:not(.shop-section .tags .row .col-4 div a),
+.dark-con.dark-mode a:not(.shop-section .tags .row .col-4 div a, .remove.delete),
 .dark-con.dark-mode p,
 .dark-con.dark-mode li,
 .dark-con.dark-mode h1 {
@@ -173,10 +173,6 @@ li {
     list-style: none;
     color: white;
     font-weight: 700;
-}
-
-.active {
-    color: #4E8B55 !important;
 }
 
 .navigation li i {
@@ -1727,6 +1723,14 @@ footer form label {
     border: 1px solid #151515;
 }
 
+.cart-section #checkout a {
+    color: white;
+    font-weight: 700;
+    background-color: #4E8B55;
+    padding: 15px 25px;
+    border-radius: 50px
+}
+
 /* ---------------------------- details - section ---------------------------- */
 
 .details-section {
@@ -1776,6 +1780,135 @@ footer form label {
 #loading-pages {
     display: none;
 }
+
+/* ---------------------------- checkout ---------------------------- */
+
+.checkout-section {
+    padding: 100px 0;
+}
+
+.checkout-section h1 {
+    font-weight: 700;
+}
+
+.checkout-section .col-6>div {
+    margin-bottom: 20px;
+}
+
+.checkout-section label {
+    margin-bottom: 10px;
+    font-size: .9em;
+}
+
+.checkout-section input,
+.checkout-section textarea {
+    padding: 25px;
+    border-radius: 50px;
+    border: 1px solid lightgrey;
+}
+
+.checkout-section textarea {
+    height: 15em;
+}
+
+.checkout-section input:focus-visible,
+.checkout-section textarea:focus-visible {
+    outline: none;
+}
+
+.checkout-section label span {
+    color: red;
+}
+
+.checkout-section table td {
+    border: 1px solid lightgrey;
+}
+
+.checkout-section table tfoot {
+    border-top: 3px solid #151515;
+}
+
+.checkout-section table td,
+.checkout-section table th {
+    padding: 20px;
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+.checkout-section .accordion-container {
+    margin-top: 50px;
+}
+
+.checkout-section .accordion-content {
+    height: 0;
+    overflow: hidden;
+    font-size: 1.1em;
+    transition: .3s;
+}
+
+.checkout-section .accordion-content p {
+    padding: 0 0 30px 30px;
+}
+
+.checkout-section .accordion-content.active {
+    height: 100px;
+}
+
+.checkout-section .info {
+    background-color: #EFECE5;
+    padding: 20px;
+    font-size: 1em;
+}
+
+.checkout-section .info a {
+text-decoration: underline !important;
+}
+
+.checkout-section .payment-radio {
+    color: black;
+}
+
+.checkout-section input[type='radio']:after {
+    width: 17px;
+    height: 17px;
+    border-radius: 17px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #d1d3d1;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+.checkout-section input[type='radio']:checked:after {
+    width: 17px;
+    height: 17px;
+    border-radius: 17px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #4E8B55;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+.checkout-section .btn button {
+    padding: 25px 100px;
+    border-radius: 60px;
+    font-weight: 700;
+    color: white;
+    background-color: #4E8B55;
+    border: none;
+    transition: .3s;
+} 
+
+.checkout-section .btn button:hover {
+    background-color: #151515;
+} 
 
 /* ---------------------------- media-query ---------------------------- */
 
@@ -1935,6 +2068,10 @@ footer form label {
 
     .loading {
         background-size: 50%;
+    }
+
+    .cart-section tbody input {
+        width: 40%;
     }
 }
 
