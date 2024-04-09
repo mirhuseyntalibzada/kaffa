@@ -277,7 +277,7 @@ const myaccountCon = document.querySelector("#my-account-main")
 
 // if (myaccountCon) {
 //     myaccountCon.innerHTML = `
-    
+
 //     `
 // }
 
@@ -669,11 +669,15 @@ if (alertCart && table && btnShop) {
         })
         checkout.forEach(btn => {
             btn.innerHTML = `
+            <a class='clear-btn' href="#">Clear</a>
             <a href="checkout.html">Proceed to checkout</a>
             `
         })
     }
+
 }
+
+
 
 
 const cartCon = document.querySelector(".cart-item-container")
