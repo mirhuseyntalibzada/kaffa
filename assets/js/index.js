@@ -673,12 +673,18 @@ if (alertCart && table && btnShop) {
             <a href="checkout.html">Proceed to checkout</a>
             `
         })
+
+        const clearBtn = document.querySelectorAll('.clear-btn')
+
+        clearBtn.forEach(btn=>{
+            btn.addEventListener("click", ()=>{
+                window.location.reload()
+                localStorage.clear("cart")
+            })
+        })
     }
 
 }
-
-
-
 
 const cartCon = document.querySelector(".cart-item-container")
 const cartConMobile = document.querySelector(".cart-item-container-mob")
