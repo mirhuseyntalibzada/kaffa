@@ -228,15 +228,23 @@ if (productContainer) {
 // ------------ sign-up ------------
 
 const signupBtn = document.querySelector("#sign-up-btn"),
-    singupInput = document.querySelectorAll("#sign-up-input")
+    singupInput = document.querySelectorAll("#sign-up-input"),
+    loginInput = document.querySelectorAll("#log-in-input"),
+    loginBtn = document.querySelector("#log-in-btn"),
+    alertCont = document.querySelector(".alert-con")
 
 if (signupBtn) {
     signupBtn.addEventListener("click", (e) => {
         e.preventDefault()
-        localStorage.setItem("name", singupInput[0].value)
-        localStorage.setItem("email", singupInput[1].value)
-        localStorage.setItem("password", singupInput[2].value)
-        window.location.assign("log-in.html")
+        if (singupInput[0].value && singupInput[1].value && singupInput[2].value) {
+            localStorage.setItem("name", singupInput[0].value)
+            localStorage.setItem("email", singupInput[1].value)
+            localStorage.setItem("password", singupInput[2].value)
+            window.location.assign("log-in.html")
+        } else {
+            alertCont.className = "alert-con error"
+            alertCont.innerHTML = "<p>Please enter your Username, Email and Password</p>"
+        }
     })
 }
 
@@ -247,10 +255,6 @@ const userData = {
     email: localStorage.getItem("email"),
     password: localStorage.getItem("password")
 }
-
-const loginInput = document.querySelectorAll("#log-in-input"),
-    loginBtn = document.querySelector("#log-in-btn"),
-    alertCont = document.querySelector(".alert-con")
 
 if (loginInput && loginBtn && alertCont) {
     loginBtn.addEventListener("click", (e) => {
@@ -271,13 +275,11 @@ if (loginInput && loginBtn && alertCont) {
 
 const myaccountCon = document.querySelector("#my-account-main")
 
-if (myaccountCon) {
-    myaccountCon.innerHTML = `
-    <div class='container'>
-        <h1 class="mb-0">Welcome, ${localStorage.getItem("name")}</h1>
-    </div>
-    `
-}
+// if (myaccountCon) {
+//     myaccountCon.innerHTML = `
+    
+//     `
+// }
 
 // ------------ contact ------------ 
 
@@ -629,20 +631,28 @@ const addToCart = (product_id) => {
     getCart(cart)
 }
 
-const alertCart = document.querySelector("#alert")
+const alertCart = document.querySelectorAll("#alert")
 const table = document.querySelector("#table-cont")
-const btnShop = document.querySelector("#button-shop")
-const checkout = document.querySelector("#checkout")
+const tableMobile = document.querySelector("#table-cont-mobile")
+const btnShop = document.querySelectorAll("#button-shop")
+const checkout = document.querySelectorAll("#checkout")
 
 if (alertCart && table && btnShop) {
     if (JSON.parse(localStorage.getItem("cart")) === null) {
-        alertCart.innerHTML = `<div>
-                                    <p class="dark-p langdata">Your cart is currently empty.</p>
-                                </div>`
+        alertCart.forEach(cont => {
+            cont.innerHTML = `<div>
+            <p class="dark-p langdata">Your cart is currently empty.</p>
+        </div>`
+        })
         table.innerHTML = ``
-        btnShop.innerHTML = `<button class="mt-4"><a href="../pages/products.html" class="langdata">Return to shop</a></button>`
+        tableMobile.innerHTML = ''
+        btnShop.forEach(btn => {
+            btn.innerHTML = `<button class="mt-4"><a href="../pages/products.html" class="langdata">Return to shop</a></button>`
+        })
     } else {
-        alertCart.innerHTML = ``
+        alertCart.forEach(cont => {
+            cont.innerHTML = ``
+        })
         table.innerHTML = `<thead>
         <tr>
             <td colspan="3">PRODUCTS</td>
@@ -653,20 +663,27 @@ if (alertCart && table && btnShop) {
         </thead>
             <tbody class="cart-item-container">
         </tbody>`
-        btnShop.innerHTML = ``
-        checkout.innerHTML = `
-        <a href="checkout.html">Proceed to checkout</a>
-        `
+        tableMobile.innerHTML = `<tbody class="cart-item-container-mob"></tbody>`
+        btnShop.forEach(btn => {
+            btn.innerHTML = ``
+        })
+        checkout.forEach(btn => {
+            btn.innerHTML = `
+            <a href="checkout.html">Proceed to checkout</a>
+            `
+        })
     }
 }
 
 
 const cartCon = document.querySelector(".cart-item-container")
+const cartConMobile = document.querySelector(".cart-item-container-mob")
 if (cartCon) {
     fetch('../assets/api/data/kaffa-products.json')
         .then(res => res.json())
         .then(data => {
             let newCart = ``
+            let newCartMob = ``
             JSON.parse(localStorage.getItem("cart")).map(cart => {
                 data.forEach(item => {
                     if (cart.product_id == item.id) {
@@ -686,7 +703,37 @@ if (cartCon) {
                     }
                 })
             })
+            JSON.parse(localStorage.getItem("cart")).map(cart => {
+                data.forEach(item => {
+                    if (cart.product_id == item.id) {
+                        newCartMob += `
+                    <tr>
+                    <th></th>
+                    <td style="text-align: right;">
+                        <a href="#" class="remove delete">x</a>
+                    </td>
+                    </tr>
+                    <tr>
+                        <th>Product:</th>
+                        <td style="text-align: right;">${item.name}</td>
+                    </tr>
+                    <tr>
+                        <th>Price:</th>
+                        <td style="text-align: right;">$${item.price}</td>
+                    </tr>
+                    <tr>
+                        <th>Quantity:</th>
+                        <td style="text-align: right;"><input id="price" type="number" value="${cart.quantity}"></td>
+                    </tr>
+                    <tr class="last-tr">
+                        <th>Subtotal:</th>
+                        <td style="text-align: right;">$${Math.round((Number(item.price) * cart.quantity) * 100) / 100}</td>
+                    </tr>`
+                    }
+                })
+            })
             cartCon.innerHTML = newCart
+            cartConMobile.innerHTML = newCartMob
         })
 
         .catch(err => {

@@ -135,7 +135,8 @@ a {
     right: 50px;
 }
 
-#cart-amount {
+#cart-amount,
+#cart-amount2 {
     font-size: 14px;
     font-weight: 700;
 }
@@ -1686,7 +1687,7 @@ footer form label {
     font-weight: 900;
 }
 
-.cart-section tbody td {
+.cart-section .cart-container:nth-child(1) tbody td {
     border: 1px solid lightgray;
 }
 
@@ -1727,8 +1728,12 @@ footer form label {
     color: white;
     font-weight: 700;
     background-color: #4E8B55;
-    padding: 15px 25px;
+    padding: 25px 35px;
     border-radius: 50px
+}
+
+.cart-section .last-tr {
+    border-bottom: 1px solid lightgrey;
 }
 
 /* ---------------------------- details - section ---------------------------- */
@@ -1791,7 +1796,7 @@ footer form label {
     font-weight: 700;
 }
 
-.checkout-section .col-6>div {
+.checkout-section .col-lg-6>div {
     margin-bottom: 20px;
 }
 
@@ -1861,7 +1866,7 @@ footer form label {
 }
 
 .checkout-section .info a {
-text-decoration: underline !important;
+    text-decoration: underline !important;
 }
 
 .checkout-section .payment-radio {
@@ -1896,7 +1901,7 @@ text-decoration: underline !important;
     border: 2px solid white;
 }
 
-.checkout-section .btn button {
+.checkout-section .btn-order button {
     padding: 25px 100px;
     border-radius: 60px;
     font-weight: 700;
@@ -1904,11 +1909,11 @@ text-decoration: underline !important;
     background-color: #4E8B55;
     border: none;
     transition: .3s;
-} 
+}
 
-.checkout-section .btn button:hover {
+.checkout-section .btn-order button:hover {
     background-color: #151515;
-} 
+}
 
 /* ---------------------------- media-query ---------------------------- */
 
@@ -2131,6 +2136,10 @@ text-decoration: underline !important;
     .loading {
         background-size: 70%;
     }
+
+    .cart-section tbody input {
+        width: 20%;
+    }
 }
 
 @media only screen and (max-width: 576px) {
@@ -2176,6 +2185,15 @@ text-decoration: underline !important;
     .online-store .text-container h1 {
         font-size: 2em;
     }
+
+    .checkout-section input,
+    .checkout-section textarea {
+        padding: 15px;
+    }
+
+    .checkout-section .btn button {
+        padding: 15px 65px;
+    }
 }
 
 
@@ -2200,5 +2218,9 @@ text-decoration: underline !important;
 
     .accordion .accordion-container.active .dropdown {
         height: 700px;
+    }
+
+    .cart-section tbody input {
+        width: 30%;
     }
 }
