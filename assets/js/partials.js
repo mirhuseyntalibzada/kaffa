@@ -84,7 +84,7 @@ header.innerHTML = `
                                 <i class="fa-solid fa-moon"></i>
                             </button>
                             <div class="brands d-flex justify-content-center align-items-center">
-                                <a href="../pages/log-in.html"><i class="fa-solid fa-user" aria-hidden="true"></i></a>
+                                <a href="${localStorage.getItem("logged-in")===null?`../pages/log-in.html`:`../pages/my-account.html`}"><i class="fa-solid fa-user" aria-hidden="true"></i></a>
                             </div>
                             <div class="brands d-flex justify-content-center align-items-center">
                                 <a href="../pages/cart.html"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></a>

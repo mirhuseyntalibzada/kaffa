@@ -890,7 +890,8 @@ li {
     color: #4E8B55;
 }
 
-.products .store-btn button {
+.products .store-btn a {
+    text-align: center;
     padding: 20px;
     margin-top: 20px;
     width: 30%;
@@ -1372,13 +1373,15 @@ footer form label {
 }
 
 .all-products-heading p {
-    font-size: .8em;
+    font-size: 12px;
     padding: 0;
 }
 
 .all-products-heading select {
     background: none;
     border: none;
+    font-size: 12px;
+    width: 105px;
 }
 
 .all-products-heading select:focus {
@@ -1650,6 +1653,44 @@ footer form label {
     margin-bottom: 20px;
     background-color: #F8F6F7;
     border-top: 4px solid #4E8B55;
+}
+
+#my-account-main button {
+    background-color: transparent;
+    border: none;
+}
+
+#my-account-main button a i {
+    color: #4E8B55;
+}
+
+#my-account-main .active {
+    border-left: 4px solid #4E8B55;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(270deg, rgba(240, 240, 240, 1) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+#my-account-main .account-sidebar {
+    background-color: rgb(241, 245, 248);
+}
+
+#my-account-main .active {
+    border-left: 4px solid #4E8B55;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(270deg, rgba(240, 240, 240, 1) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+#my-account-main .account-sidebar {
+    background-color: rgb(241, 245, 248);
+}
+
+.dark-con.dark-mode #my-account-main .active {
+    background: rgb(0, 0, 0);
+    background: linear-gradient(270deg, rgba(15, 15, 15, 1) 0%, rgba(0, 0, 0, 1) 100%);
+}
+
+.dark-con.dark-mode #my-account-main .account-sidebar {
+    background-color: rgb(22, 22, 22);
 }
 
 /* ---------------------------- cart ---------------------------- */
@@ -2222,5 +2263,9 @@ footer form label {
 
     .cart-section tbody input {
         width: 30%;
+    }
+
+    .all-products-heading select {
+        width: 100px;
     }
 }

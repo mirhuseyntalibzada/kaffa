@@ -1,4 +1,3 @@
-
 // ------------ hamburger menu ------------
 
 const hamburgerBtn = document.querySelector("#hamburger-icon");
@@ -187,7 +186,7 @@ if (productContainer) {
                         <img src="${item.img}" alt="">
                         <div class="d-flex flex-column row-gap-2">
                         <a href="details.html?id=${item.id}" target="_blank">Read More</a>
-                        <a id="cart-add-btn" >Add to Cart</a>
+                        <a id="cart-add-btn" data-id="${item.id}">Add to Cart</a>
                     </div>
                     </div>
                     <div class="icons d-flex justify-content-center gap-1">
@@ -204,7 +203,9 @@ if (productContainer) {
                 </div>
                 `
                     })
-                    productContainer.innerHTML = card
+                    productContainer.innerHTML = card;
+                    const cartBtn = document.querySelectorAll("#cart-add-btn");
+                    getItemID(cartBtn);
                 }
                 displayItems(0, 6);
 
@@ -236,10 +237,12 @@ const signupBtn = document.querySelector("#sign-up-btn"),
 if (signupBtn) {
     signupBtn.addEventListener("click", (e) => {
         e.preventDefault()
-        if (singupInput[0].value && singupInput[1].value && singupInput[2].value) {
-            localStorage.setItem("name", singupInput[0].value)
-            localStorage.setItem("email", singupInput[1].value)
-            localStorage.setItem("password", singupInput[2].value)
+        if (singupInput[0].value && singupInput[1].value && singupInput[2].value && singupInput[3].value && singupInput[4].value) {
+            localStorage.setItem("fisrtname", singupInput[0].value)
+            localStorage.setItem("lastname", singupInput[1].value)
+            localStorage.setItem("username", singupInput[2].value)
+            localStorage.setItem("email", singupInput[3].value)
+            localStorage.setItem("password", singupInput[4].value)
             window.location.assign("log-in.html")
         } else {
             alertCont.className = "alert-con error"
@@ -251,7 +254,9 @@ if (signupBtn) {
 // ------------ login ------------ 
 
 const userData = {
-    username: localStorage.getItem("name"),
+    fisrtname: localStorage.getItem("fisrtname"),
+    lastname: localStorage.getItem("lastname"),
+    username: localStorage.getItem("username"),
     email: localStorage.getItem("email"),
     password: localStorage.getItem("password")
 }
@@ -263,6 +268,7 @@ if (loginInput && loginBtn && alertCont) {
             alertCont.className = "alert-con success"
             alertCont.innerHTML = "<p>Success</p>"
             window.location.assign("my-account.html")
+            localStorage.setItem("logged-in", true)
         }
         else {
             alertCont.className = "alert-con error"
@@ -271,15 +277,112 @@ if (loginInput && loginBtn && alertCont) {
     })
 }
 
+const myAccBtn = document.querySelector(".my-account-btn")
+
+if (window.location.pathname === "/index.html") {
+    if (localStorage.getItem("logged-in") === null) {
+        myAccBtn.innerHTML = '<a href="pages/log-in.html"><i class="fa-solid fa-user"></i></a>'
+    } else {
+        myAccBtn.innerHTML = '<a href="pages/my-account.html"><i class="fa-solid fa-user"></i></a>'
+    }
+    console.log(myAccBtn);
+}
+
 // ------------ my-account ------------ 
 
 const myaccountCon = document.querySelector("#my-account-main")
 
-// if (myaccountCon) {
-//     myaccountCon.innerHTML = `
+if (myaccountCon) {
+    myaccountCon.innerHTML = `
+    <div class="container">
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <div style="margin-bottom: 20px;padding: 20px;"
+                class="d-flex flex-column align-items-center justify-content-center">
+                <div class="img-container" style="width: 30%">
+                    <img
+                        src="../assets/images/logo.png" />
+                </div>
+                <div>
+                    <h2 class="m-0">${localStorage.getItem("username")}</h2>
+                </div>
+            </div>
+            <div class="d-flex flex-column account-sidebar">
+                <button id="btn" style="padding: 20px;" class="text-start active">
+                    <a><i class="fa-solid fa-user"></i> Account Details</a>
+                </button>
+                <button id="btn" style="padding: 20px;" class="text-start">
+                    <a><i class="fa-solid fa-key"></i> Change Password</a>
+                </button>
+                <button id="btn" style="padding: 20px;" class="text-start">
+                    <a><i class="fa-solid fa-ticket"></i> My Orders</a>
+                </button>
+                <button id="btn" style="padding: 20px;" class="text-start">
+                    <a><i class="fa-regular fa-credit-card"></i> Payment Methods</a>
+                </button>
+                <button id="btn" style="padding: 20px;" class="text-start">
+                    <a><i class="fa-solid fa-circle-info"></i> Need Help</a>
+                </button>
+                <button id="btn" style="padding: 20px;" class="log-out text-start">
+                    <a><i class="fa-solid fa-door-open"></i> Log out</a>
+                </button>
+            </div>
+        </div>
+        <div class="col-12 col-md-8">
+            <div>
+                <h1>Account Details</h1>
+            </div>
+            <form class="mt-5" action="">
+                <div class="d-flex flex-column">
+                    <div class="mb-2">
+                        <h6>User Name</h6>
+                        <input style="width: 100%; padding: 15px 10px;" value="${localStorage.getItem("username")}" type="text" name="" id="" readonly>
+                    </div>
+                    <div class="mb-2">
+                        <h6>First Name</h6>
+                        <input style="width: 100%; padding: 15px 10px;" value="${localStorage.getItem("fisrtname")}" type="text" name="" id="" readonly>
+                    </div>
+                    <div class="mb-2">
+                        <h6>Last Name</h6>
+                        <input style="width: 100%; padding: 15px 10px;" value="${localStorage.getItem("lastname")}" type="text" name="" id="" readonly>
+                    </div>
+                    <div>
+                    <h6>Your Email</h6>
+                    <input style="width: 100%; padding: 15px 10px;" value="${localStorage.getItem("email")}" type="text" name="" id="" readonly>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    `
+    const logOutBtn = document.querySelector(".log-out")
 
-//     `
-// }
+    logOutBtn.addEventListener("click", () => {
+        localStorage.removeItem("logged-in")
+        window.location.assign("log-in.html")
+    })
+}
+
+
+if (myaccountCon) {
+    const btn = document.querySelectorAll("#btn");
+
+    const closeAllBtn = (clickedBtn) => {
+        btn.forEach(btn => {
+            if (btn !== clickedBtn) {
+                btn.classList.remove("active");
+            }
+        });
+    };
+
+    for (let i = 0; i < btn.length; i++) {
+        btn[i].addEventListener("click", () => {
+            closeAllBtn(btn[i]);
+            btn[i].classList.add("active");
+        });
+    }
+}
 
 // ------------ contact ------------ 
 
@@ -359,7 +462,7 @@ if (details) {
                 impedit voluptatem fugit fugiat eveniet totam esse? Molestiae repellat blanditiis numquam, eligendi excepturi sint
                 nostrum</p>
                 <div class="d-flex column-gap-5 align-items-center justify-content-center justify-content-md-start mb-4 mb-md-0">
-                    <button>Add to Cart</button>
+                    <button id="cart-add-btn" data-id="${filterData[0].id}">Add to Cart</button>
                     <p class="price">${filterData[0].price}</p>
                 </div>
             </div>
@@ -370,6 +473,8 @@ if (details) {
             </div>
             `
             details.innerHTML = card
+            const cartBtn = document.querySelectorAll("#cart-add-btn");
+            getItemID(cartBtn);
         })
 
         .catch(err => {
@@ -540,12 +645,12 @@ if (window.location.pathname === "/index.html") {
         eng: ["Home", "FAQ", "Products", "Blog", "Contacts", `Home <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
             `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Products <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
             `Blog <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Contacts <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
-            "Sign Up", "Home", "Sign up", "Username <span>*</span>", "Email <span>*</span>", "Password <span>*</span>", "Sign up", "Remember me", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
+            "Sign Up", "Home", "Sign up", "First Name <span>*</span>", "Last Name <span>*</span>", "Username <span>*</span>", "Email <span>*</span>", "Password <span>*</span>", "Sign up", "Remember me", "Contact Info", "Our location", "Phones:", "Subscribe", "Subscribe",
             "I have read and agree to the terms & conditions"],
         az: ["Ana Səhifə", "FAQ", "Məhsullar", "Məqalə", "Əlaqə", `Ana Səhifə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
             `FAQ <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Məhsullar <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
             `Məqalə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`, `Əlaqə <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>`,
-            "Qeydiyyat", "Ana Səhifə", "Qeydiyyat", "İstifadəçi adı <span>*</span>", "E-mail <span>*</span>", "Şifrə <span>*</span>", "Qeydiyyatdan keç", "Yadda saxla", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
+            "Qeydiyyat", "Ana Səhifə", "Qeydiyyat", "Ad <span>*</span>", "Soyad <span>*</span>", "İstifadəçi adı <span>*</span>", "E-mail <span>*</span>", "Şifrə <span>*</span>", "Qeydiyyatdan keç", "Yadda saxla", "Kontakt İnfo", "Ünvanımız", "Telefonlar:", "Abunə olun", "Abunə olun",
             "Şərtləri və qaydaları oxudum və qəbul edirəm"]
     }
     language(dataLang)
@@ -611,6 +716,32 @@ const getItemID = (cartBtn) => {
     ))
 }
 
+const getBtnID = (btnID) => {
+    btnID.forEach(btn => {
+        btn.addEventListener("click", () => {
+            let product_id = btn.getAttribute("data-id")
+            deleteFromCard(product_id)
+        })
+    })
+}
+
+const deleteFromCard = (product_id) => {
+    let positionOfItemCart = cart.findIndex((value) => value.product_id == product_id)
+    if (cart[positionOfItemCart].quantity === 1) {
+        cart.pop({
+            product_id: product_id,
+            quantity: 1
+        })
+    } else {
+        cart[positionOfItemCart].quantity -= 1;
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart))
+    getCart(cart)
+    window.location.reload()
+
+}
+
 const addToCart = (product_id) => {
     let positionOfItemCart = cart.findIndex((value) => value.product_id == product_id)
     if (cart <= 0) {
@@ -631,6 +762,12 @@ const addToCart = (product_id) => {
     getCart(cart)
 }
 
+if (localStorage.getItem("cart") === null) {
+    cart = []
+} else {
+    cart = JSON.parse(localStorage.getItem("cart"))
+}
+
 const alertCart = document.querySelectorAll("#alert")
 const table = document.querySelector("#table-cont")
 const tableMobile = document.querySelector("#table-cont-mobile")
@@ -638,7 +775,7 @@ const btnShop = document.querySelectorAll("#button-shop")
 const checkout = document.querySelectorAll("#checkout")
 
 if (alertCart && table && btnShop) {
-    if (JSON.parse(localStorage.getItem("cart")) === null) {
+    if (localStorage.getItem("cart") === null || JSON.parse(localStorage.getItem("cart")).length === 0) {
         alertCart.forEach(cont => {
             cont.innerHTML = `<div>
             <p class="dark-p langdata">Your cart is currently empty.</p>
@@ -676,10 +813,10 @@ if (alertCart && table && btnShop) {
 
         const clearBtn = document.querySelectorAll('.clear-btn')
 
-        clearBtn.forEach(btn=>{
-            btn.addEventListener("click", ()=>{
+        clearBtn.forEach(btn => {
+            btn.addEventListener("click", () => {
+                localStorage.removeItem("cart")
                 window.location.reload()
-                localStorage.clear("cart")
             })
         })
     }
@@ -700,16 +837,17 @@ if (cartCon) {
                         newCart += `
                         <tr>
                             <td style="width: 3em;">
-                                <a href="#" class="remove delete" data-id=${item.id} style="width: 3em;">x</a>
+                                <a href="#!" class="remove-btn remove delete" data-id=${cart.product_id} style="width: 3em;">x</a>
                             </td>
                             <td style="width: 4em;">
                                 <img style="width: 100%;" src="${item.img}" alt="">
                             </td>
                             <td>${item.name}</td>
                             <td>$${item.price}</td>
-                            <td><input id="price" type="number" value="${cart.quantity}"></td>
+                            <td><input id="price" type="text" value="${cart.quantity}" readonly></td>
                             <td>$${Math.round((Number(item.price) * cart.quantity) * 100) / 100}</td>
                         </tr>`
+
                     }
                 })
             })
@@ -720,7 +858,7 @@ if (cartCon) {
                     <tr>
                     <th></th>
                     <td style="text-align: right;">
-                        <a href="#" class="remove delete">x</a>
+                        <a href="#!" data-id=${cart.product_id} class="remove-btn remove delete">x</a>
                     </td>
                     </tr>
                     <tr>
@@ -733,7 +871,7 @@ if (cartCon) {
                     </tr>
                     <tr>
                         <th>Quantity:</th>
-                        <td style="text-align: right;"><input id="price" type="number" value="${cart.quantity}"></td>
+                        <td style="text-align: right;"><input id="price" type="text" value="${cart.quantity}"></td>
                     </tr>
                     <tr class="last-tr">
                         <th>Subtotal:</th>
@@ -744,6 +882,8 @@ if (cartCon) {
             })
             cartCon.innerHTML = newCart
             cartConMobile.innerHTML = newCartMob
+            const btnID = document.querySelectorAll(".remove-btn")
+            getBtnID(btnID)
         })
 
         .catch(err => {
@@ -757,15 +897,19 @@ const cartAmount2 = document.querySelector("#cart-amount2")
 const getCart = (cart) => {
     let cartItemCount = 0
     cart.map(cart => {
-        console.log(cart.quantity);
         cartItemCount += cart.quantity
     })
-    localStorage.setItem("amount", cartItemCount)
     cartAmount.innerHTML = cartItemCount
     cartAmount2.innerHTML = cartItemCount
+    localStorage.setItem("amount", cartItemCount)
 }
-cartAmount.innerHTML = localStorage.getItem("amount")
-cartAmount2.innerHTML = localStorage.getItem("amount")
+if (localStorage.getItem("cart") === null) {
+    cartAmount.innerHTML = 0
+    cartAmount2.innerHTML = 0
+} else {
+    cartAmount.innerHTML = localStorage.getItem("amount")
+    cartAmount2.innerHTML = localStorage.getItem("amount")
+}
 
 
 // ---------- checkout - accordion -------------
