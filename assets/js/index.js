@@ -277,15 +277,28 @@ if (loginInput && loginBtn && alertCont) {
     })
 }
 
-const myAccBtn = document.querySelector(".my-account-btn")
+const myAccBtnMain = document.querySelectorAll(".my-account-btn-main")
 
 if (window.location.pathname === "/index.html") {
-    if (localStorage.getItem("logged-in") === null) {
-        myAccBtn.innerHTML = '<a href="pages/log-in.html"><i class="fa-solid fa-user"></i></a>'
-    } else {
-        myAccBtn.innerHTML = '<a href="pages/my-account.html"><i class="fa-solid fa-user"></i></a>'
-    }
-    console.log(myAccBtn);
+    myAccBtnMain.forEach(btn=>{
+        if (localStorage.getItem("logged-in") === null) {
+            btn.innerHTML = '<a href="pages/log-in.html"><i class="fa-solid fa-user"></i></a>'
+        } else {
+            btn.innerHTML = '<a href="pages/my-account.html"><i class="fa-solid fa-user"></i></a>'
+        }
+    })
+}
+
+const myAccBtn = document.querySelectorAll(".my-account-btn")
+
+if (window.location.pathname !== "/index.html") {
+    myAccBtn.forEach(btn=>{
+        if (localStorage.getItem("logged-in") === null) {
+            btn.innerHTML = '<a href="log-in.html"><i class="fa-solid fa-user"></i></a>'
+        } else {
+            btn.innerHTML = '<a href="my-account.html"><i class="fa-solid fa-user"></i></a>'
+        }
+    })
 }
 
 // ------------ my-account ------------ 
@@ -360,6 +373,7 @@ if (myaccountCon) {
 
     logOutBtn.addEventListener("click", () => {
         localStorage.removeItem("logged-in")
+        localStorage.removeItem("cart")
         window.location.assign("log-in.html")
     })
 }
@@ -743,23 +757,27 @@ const deleteFromCard = (product_id) => {
 }
 
 const addToCart = (product_id) => {
-    let positionOfItemCart = cart.findIndex((value) => value.product_id == product_id)
-    if (cart <= 0) {
-        cart = [{
-            product_id: product_id,
-            quantity: 1
-        }]
-    } else if (positionOfItemCart < 0) {
-        cart.push({
-            product_id: product_id,
-            quantity: 1
-        })
+    if (localStorage.getItem("logged-in")===null) {
+        alert("please log in")
     } else {
-        cart[positionOfItemCart].quantity += 1;
-    }
+        let positionOfItemCart = cart.findIndex((value) => value.product_id == product_id)
+        if (cart <= 0) {
+            cart = [{
+                product_id: product_id,
+                quantity: 1
+            }]
+        } else if (positionOfItemCart < 0) {
+            cart.push({
+                product_id: product_id,
+                quantity: 1
+            })
+        } else {
+            cart[positionOfItemCart].quantity += 1;
+        }
 
-    localStorage.setItem("cart", JSON.stringify(cart))
-    getCart(cart)
+        localStorage.setItem("cart", JSON.stringify(cart))
+        getCart(cart)
+    }
 }
 
 if (localStorage.getItem("cart") === null) {

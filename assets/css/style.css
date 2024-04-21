@@ -156,7 +156,7 @@ a {
     color: white !important;
 }
 
-.dark-con.dark-mode a:not(.shop-section .tags .row .col-4 div a, .remove.delete),
+.dark-con.dark-mode a:not(.shop-section .tags .row .col-4 div a, .remove.delete, .checkout-section a),
 .dark-con.dark-mode p,
 .dark-con.dark-mode li,
 .dark-con.dark-mode h1 {
@@ -307,6 +307,10 @@ li {
     z-index: 99;
     left: 50%;
     animation: smoke 12s linear infinite;
+    pointer-events: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 @keyframes smoke {
@@ -1641,6 +1645,10 @@ footer form label {
     color: #151515;
 }
 
+.dark-con.dark-mode .alert-con p {
+    color: black !important;
+}
+
 .alert-con.error {
     padding: 20px;
     margin-bottom: 20px;
@@ -1898,6 +1906,10 @@ footer form label {
 
 .checkout-section .accordion-content.active {
     height: 100px;
+}
+
+.dark-con.dark-mode .info p {
+    color: black !important;
 }
 
 .checkout-section .info {
